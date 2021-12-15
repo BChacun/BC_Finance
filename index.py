@@ -7,7 +7,7 @@ import base64, os
 from app import app, server
 
 # Connect to your app pages
-from apps import CV
+from apps import CV, Trading
 
 # the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
@@ -39,6 +39,7 @@ sidebar = html.Div(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
                 dbc.NavLink("Mon CV", href="/apps/CV", active="exact"),
+                dbc.NavLink("Trading", href="/apps/Trading", active="exact"),
                 
             ],
             vertical=True,
@@ -90,6 +91,8 @@ def render_page_content(pathname):
         return Home
     elif pathname == "/apps/CV":
         return CV.layout
+    elif pathname == "/apps/Trading":
+        return Trading.layout
 
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
