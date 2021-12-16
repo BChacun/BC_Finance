@@ -1,6 +1,6 @@
 from dash import dcc
 from dash import html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 from dash import dash_table
 import pathlib
 from app import app
@@ -9,6 +9,10 @@ import pandas as pd
 import numpy as np
 
 import yfinance as yf
+
+
+# Models:
+from apps.trading_apps import SMA
 
 
 # get relative data folder
@@ -26,16 +30,54 @@ layout = html.Div([
     html.P('The data used comes from yahoo finance '),
     html.Div([
         
-    html.P('NVIDIA Data : '),
-     dash_table.DataTable(
-    data=df.to_dict('records'),
-    columns=[{'id': c, 'name': c} for c in df.columns],
-    page_size=10,
-
-    )
+     
+     html.P('Model :'),
+     
+      dcc.Dropdown(id = 'model',
+        options=[
+            {'label': 'None', 'value': 'NONE'},
+            {'label': 'SMA', 'value': 'SMA'},
+            
+        ],
+        value='NONE'
+    ),
+      
+      html.Button('Run', id='btn', n_clicks=0),
+      
+      html.Div(id="model-content"),
 
         
-    ], style = {"height":'20'})
+    ])
 ])
-             
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             
+@app.callback(Output('model-content', 'children'),
+    
+    [Input('btn','n_clicks')],
+    State('page-content','children'),
+    State('model', 'value'),
+   )
+def update_graph( n_clicks,children, value):
+    
+    if value == 'SMA':
+        return SMA.layout
+    else :
+        return [
+            html.H1("No model selected", className="text-danger"),
+            html.Hr(),
+            html.P(f"Please choose a model and launch it"),
+        ]
