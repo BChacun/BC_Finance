@@ -28,8 +28,15 @@ df = yf.Ticker("NVDA").history(period='5y')
 layout = html.Div([
     html.H1('Algorithmic Trading'),
     html.P('The data used comes from yahoo finance '),
-    html.Div([
-        
+    html.Div([html.P('Data :'),
+        dcc.Dropdown(id = 'data',
+        options=[
+            {'label': 'None', 'value': 'NONE'},
+            {'label': 'NVIDIA', 'value': 'NVDA'},
+            
+        ],
+        value='NONE'
+    ),
      
      html.P('Model :'),
      
@@ -70,14 +77,29 @@ layout = html.Div([
     [Input('btn','n_clicks')],
     State('page-content','children'),
     State('model', 'value'),
+    State('data', 'value'),
    )
-def update_graph( n_clicks,children, value):
+def update_graph( n_clicks,children, value, data_value):
     
-    if value == 'SMA':
-        return SMA.layout
-    else :
+    if data_value == "NONE":
+        return [
+            html.H1("No data selected", className="text-danger"),
+            html.Hr(),
+            html.P(f"Please choose a stock"),
+        ]
+    
+    if value == "NONE":
         return [
             html.H1("No model selected", className="text-danger"),
             html.Hr(),
             html.P(f"Please choose a model and launch it"),
+        ]
+    
+    if value == 'SMA':
+        return SMA.layout(data_value)
+    else :
+        return [
+            html.H1("No model selected", className="text-danger"),
+            html.Hr(),
+            html.P(f"Please choose a model and stock"),
         ]

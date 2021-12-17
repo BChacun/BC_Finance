@@ -33,12 +33,12 @@ sidebar = html.Div(
         html.H2("MENU", className="display-4"),
         html.Hr(),
         html.P(
-            "Naviguez ici", className="lead"
+            "Browse here", className="lead"
         ),
         dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
-                dbc.NavLink("Mon CV", href="/apps/CV", active="exact"),
+                dbc.NavLink("My CV", href="/apps/CV", active="exact"),
                 dbc.NavLink("Trading", href="/apps/Trading", active="exact"),
                 
             ],
@@ -54,31 +54,66 @@ content = html.Div(id="page-content", style=CONTENT_STYLE)
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 
-"""
-Home = html.Div(children=[
-    html.Img(src=app.get_asset_url('moi.png'), style={'height':'30%', 'width':'30%'})
-, html.Div(children=[html.Img(src=app.get_asset_url('imta.png'), style={'height':'10%', 'width':'10%',"margin-left": 10}),
-    html.Img(src=app.get_asset_url('imta.png'), style={'height':'10%', 'width':'10%',"margin-left": 10})  
-                     ],style={'display': 'inline'})
-], style={'display': 'block'})
-               
- """
 card = dbc.Card(
     dbc.CardBody(
         [
             html.H4("Baptiste Chacun"),
-            html.H2("Ingénieur"),
-            html.P("Spécialisé en Data Science"),
+            html.H2("Engineer"),
+            html.P("Specialized in Data Science"),
             html.Img(src=app.get_asset_url('imta.png'), style={'height':'10%', 'width':'10%',"margin-left": 10})
         ]
     )
 )
 
+
+
+dash_card = dbc.Card(
+    [
+        dbc.Row(
+            [
+                dbc.Col(
+                    dbc.CardImg(
+                        src=app.get_asset_url('dash_logo.png'),
+                        className="img-fluid rounded-start",
+                    ),
+                    className="col-md-4",
+                ),
+                dbc.Col(
+                    dbc.CardBody(
+                        [
+                            html.H4("Made with Dash", className="card-title"),
+                            html.P(
+                                "This application was coded in python,"
+                                "the web part was designed thanks to Dash.",
+                                
+                                className="card-text",
+                            ),
+                            html.Small(
+                                "Last updated 17/12/2021",
+                                className="card-text text-muted",
+                            ),
+                        ]
+                    ),
+                    className="col-md-8",
+                ),
+            ],
+            className="g-0 d-flex align-items-center",
+        )
+    ],
+    className="mb-3",
+    style={},
+)
+
+
 Home = html.Div([
     dbc.Row([
         html.Img(src=app.get_asset_url('moi.png'), style={'height':'30%', 'width':'30%'}), dbc.Col([card])
 ]),
-
+ dbc.Row([
+     
+     dash_card
+     
+     ],style={"padding": '5vh'},),
 
 ])                    
                      
