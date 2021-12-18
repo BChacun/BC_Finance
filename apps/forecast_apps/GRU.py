@@ -19,6 +19,7 @@ import pandas as pd
 import math
 import pathlib
 import numpy as np
+import dash_loading_spinners as dls
 
 
 # get relative data folder
@@ -43,7 +44,7 @@ def layout(tick):
         dcc.Input(id="l_gru", value=0.010, step=0.002, type="number", placeholder="Learning Rate", debounce=True),
         dcc.Input(id="ep_gru", type="number",value=100, step=10, placeholder="Number of Episode", debounce=True, style={'margin-left' : '1vh',}),
         html.Button('Run', id='btn_run_gru', n_clicks=0, style={'margin-left' : '1vh',}),
-        html.Div([],id='model-forecast-gru')
+        dls.Hash(html.Div([],id='model-forecast-gru'))
         ])
     return layout
 
