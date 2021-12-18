@@ -19,7 +19,7 @@ import pandas as pd
 import math
 import pathlib
 import numpy as np
-import dash_loading_spinners as dls
+
 
 
 # get relative data folder
@@ -44,7 +44,12 @@ def layout(tick):
         dcc.Input(id="l_gru", value=0.010, step=0.002, type="number", placeholder="Learning Rate", debounce=True),
         dcc.Input(id="ep_gru", type="number",value=100, step=10, placeholder="Number of Episode", debounce=True, style={'margin-left' : '1vh',}),
         html.Button('Run', id='btn_run_gru', n_clicks=0, style={'margin-left' : '1vh',}),
-        dls.Hash(html.Div([],id='model-forecast-gru'))
+        dcc.Loading(
+            id="model-forecast-gru",
+            type="default",
+            children=html.Div(id="loading-output-1")
+        ),
+        
         ])
     return layout
 
@@ -125,6 +130,9 @@ def layout_final(tick, l, ep):
     
 
     
+    mae = mean_absolute_error(test, predictions)
+    rmse = sqrt(mean_squared_error(test, predictions))
+    mape = mean_absolute_percentage_error(test, predictions)
     
     
     
@@ -153,8 +161,19 @@ def layout_final(tick, l, ep):
 
     ),
     dcc.Graph(figure=fig),
+    
+    
+    
+    
 
-     
+    html.Div([
+        
+        
+        html.P('MAE : ' + str(mae)),
+        html.P('RMSE : ' + str(rmse)),
+        html.P('MAPE : ' + str(mape)),
+        
+        ])
     ])
     
     
