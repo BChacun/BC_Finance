@@ -7,4 +7,6 @@ app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],suppress_callback_ex
 
 # ,suppress_callback_exceptions=True
 
+
+
 server = app.server

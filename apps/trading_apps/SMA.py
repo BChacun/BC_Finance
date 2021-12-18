@@ -60,7 +60,7 @@ def layout(tick):
     
     layout = html.Div([
         
-    html.P('NVIDIA Data : '),
+    html.P(str(tick) + ' Data : '),
      dash_table.DataTable(
     data=df.to_dict('records'),
     columns=[{'id': c, 'name': c} for c in df.columns],

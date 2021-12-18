@@ -12,7 +12,7 @@ import yfinance as yf
 
 
 # Models:
-from apps.trading_apps import SMA
+from apps.forecast_apps import SES, GRU
 
 
 # get relative data folder
@@ -24,11 +24,12 @@ DATA_PATH = PATH.joinpath("../datasets").resolve()
 
 
 
+
 layout = html.Div([
-    html.H1('Algorithmic Trading'),
+    html.H1('Algorithmic Forecasting'),
     html.P('The data used comes from yahoo finance '),
     html.Div([html.P('Data :'),
-        dcc.Dropdown(id = 'data',
+        dcc.Dropdown(id = 'data_forecast',
         options=[
             {'label': 'None', 'value': 'NONE'},
             {'label': 'NVIDIA', 'value': 'NVDA'},
@@ -39,18 +40,19 @@ layout = html.Div([
      
      html.P('Model :'),
      
-      dcc.Dropdown(id = 'model',
+      dcc.Dropdown(id = 'model_forecast',
         options=[
             {'label': 'None', 'value': 'NONE'},
-            {'label': 'SMA', 'value': 'SMA'},
+            {'label': 'GRU', 'value': 'GRU'},
+            {'label': 'SES', 'value': 'SES'},
             
         ],
         value='NONE'
     ),
       
-      html.Button('Run', id='btn', n_clicks=0),
+      html.Button('Run', id='btn_run_forecast', n_clicks=0),
       
-      html.Div(id="model-content"),
+      html.Div(id="model-forecast-content"),
 
         
     ])
@@ -71,12 +73,12 @@ layout = html.Div([
 
 
              
-@app.callback(Output('model-content', 'children'),
+@app.callback(Output('model-forecast-content', 'children'),
     
-    [Input('btn','n_clicks')],
+    [Input('btn_run_forecast','n_clicks')],
     State('page-content','children'),
-    State('model', 'value'),
-    State('data', 'value'),
+    State('model_forecast', 'value'),
+    State('data_forecast', 'value'),
    )
 def update_graph( n_clicks,children, value, data_value):
     
@@ -94,8 +96,12 @@ def update_graph( n_clicks,children, value, data_value):
             html.P(f"Please choose a model and launch it"),
         ]
     
-    if value == 'SMA':
-        return SMA.layout(data_value)
+    if value == 'SES':
+        return SES.layout(data_value)
+    
+    if value == 'GRU':
+        return GRU.layout(data_value)
+    
     else :
         return [
             html.H1("No model selected", className="text-danger"),

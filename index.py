@@ -7,7 +7,7 @@ import base64, os
 from app import app, server
 
 # Connect to your app pages
-from apps import CV, Trading
+from apps import CV, Trading, Forecast
 
 # the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
@@ -40,6 +40,7 @@ sidebar = html.Div(
                 dbc.NavLink("Home", href="/", active="exact"),
                 dbc.NavLink("My CV", href="/apps/CV", active="exact"),
                 dbc.NavLink("Trading", href="/apps/Trading", active="exact"),
+                dbc.NavLink("Forecast", href="/apps/Forecast", active="exact"),
                 
             ],
             vertical=True,
@@ -89,7 +90,7 @@ dash_card = dbc.Card(
                                 className="card-text",
                             ),
                             html.Small(
-                                "Last updated 17/12/2021",
+                                "Last update : 17/12/2021",
                                 className="card-text text-muted",
                             ),
                         ]
@@ -128,6 +129,8 @@ def render_page_content(pathname):
         return CV.layout
     elif pathname == "/apps/Trading":
         return Trading.layout
+    elif pathname == "/apps/Forecast":
+        return Forecast.layout
 
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
@@ -139,4 +142,4 @@ def render_page_content(pathname):
     )
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
