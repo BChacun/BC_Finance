@@ -93,7 +93,9 @@ def layout(tick):
     
     
     
-    
+    mae = mean_absolute_error(test, predictions)
+    rmse = sqrt(mean_squared_error(test, predictions))
+    mape = mean_absolute_percentage_error(test, predictions)
     
     
     
@@ -123,6 +125,15 @@ def layout(tick):
     html.P("α = " + str(model.params['smoothing_level'])),
      
     dcc.Graph(figure=fig),
+    
+    html.Div([
+        
+        
+        html.P('MAE : ' + str(mae)),
+        html.P('RMSE : ' + str(rmse)),
+        html.P('MAPE : ' + str(mape)),
+        
+        ])
      
   ])
 

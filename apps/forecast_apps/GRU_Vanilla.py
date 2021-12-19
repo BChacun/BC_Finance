@@ -68,6 +68,8 @@ def layout_final(tick, l, ep):
     res = separate_data(df, 0.8)
     train, test = res[0], res[1]
     len_test = len(test)
+    
+    start = time.time()
 
     # For the model
     shifted_df = df.shift()
@@ -99,7 +101,7 @@ def layout_final(tick, l, ep):
     model.compile(loss='mean_squared_error', optimizer=opt, metrics=['accuracy'])
     # model.fit(X_train, y_train, epochs=100, batch_size=20, shuffle=False)
 
-    start = time.time()
+    
     model.fit(X_train, y_train, epochs=ep, batch_size=20, shuffle=False)
   
     X_test = X_test.reshape(len_test, 1, 1)
@@ -172,6 +174,7 @@ def layout_final(tick, l, ep):
         html.P('MAE : ' + str(mae)),
         html.P('RMSE : ' + str(rmse)),
         html.P('MAPE : ' + str(mape)),
+        html.P('Time : ' + str(duree) + ' s'),
         
         ])
     ])

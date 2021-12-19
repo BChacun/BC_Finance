@@ -12,7 +12,7 @@ import yfinance as yf
 
 
 # Models:
-from apps.forecast_apps import SES, GRU
+from apps.forecast_apps import SES, GRU_Vanilla, LSTM_Vanilla
 
 
 # get relative data folder
@@ -43,7 +43,8 @@ layout = html.Div([
       dcc.Dropdown(id = 'model_forecast',
         options=[
             {'label': 'None', 'value': 'NONE'},
-            {'label': 'GRU', 'value': 'GRU'},
+            {'label': 'GRU_Vanilla', 'value': 'GRU_Vanilla'},
+            {'label': 'LSTM_Vanilla', 'value': 'LSTM_Vanilla'},
             {'label': 'SES', 'value': 'SES'},
             
         ],
@@ -96,11 +97,16 @@ def update_graph( n_clicks,children, value, data_value):
             html.P(f"Please choose a model and launch it"),
         ]
     
+    if value == 'GRU_Vanilla':
+        return GRU_Vanilla.layout(data_value)
+    
+    if value == 'LSTM_Vanilla':
+        return LSTM_Vanilla.layout(data_value)
+    
     if value == 'SES':
         return SES.layout(data_value)
     
-    if value == 'GRU':
-        return GRU.layout(data_value)
+    
     
     else :
         return [

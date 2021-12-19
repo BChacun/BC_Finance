@@ -39,8 +39,9 @@ sidebar = html.Div(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
                 dbc.NavLink("My CV", href="/apps/CV", active="exact"),
-                dbc.NavLink("Trading", href="/apps/Trading", active="exact"),
                 dbc.NavLink("Forecast", href="/apps/Forecast", active="exact"),
+                dbc.NavLink("Trading", href="/apps/Trading", active="exact"),
+                
                 
             ],
             vertical=True,
@@ -127,10 +128,11 @@ def render_page_content(pathname):
         return Home
     elif pathname == "/apps/CV":
         return CV.layout
-    elif pathname == "/apps/Trading":
-        return Trading.layout
     elif pathname == "/apps/Forecast":
         return Forecast.layout
+    elif pathname == "/apps/Trading":
+        return Trading.layout
+    
 
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
